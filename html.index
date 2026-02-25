@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NMSA-Nahda Merch</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f8ff;
+  color: #1a1a1a;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 8%;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+}
+
+header h1 {
+  color: #0d6efd;
+}
+
+nav a {
+  text-decoration: none;
+  margin-left: 20px;
+  color: #333;
+  font-weight: 500;
+}
+
+.hero {
+  padding: 100px 8%;
+  text-align: center;
+  background: linear-gradient(to right, #ffffff, #eaf2ff);
+}
+
+.hero h2 {
+  font-size: 42px;
+  margin-bottom: 20px;
+}
+
+.hero span {
+  color: #0d6efd;
+}
+
+.btn {
+  background: #0d6efd;
+  color: white;
+  padding: 14px 30px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.products {
+  padding: 80px 8%;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 60px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.price {
+  color: #0d6efd;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+select, input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  margin-top: 10px;
+  background: #0d6efd;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+footer {
+  background: #0d6efd;
+  color: white;
+  text-align: center;
+  padding: 40px 8%;
+  margin-top: 60px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>NMSA-Nahda Merch</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#products">Shop</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Wear Your <span>Identity</span></h2>
+  <a href="#products" class="btn">Shop Now</a>
+</section>
+
+<section class="products" id="products">
+  <h2 class="section-title">Our Collection</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <img src="https://via.placeholder.com/300x300" alt="">
+      <h3>Classic Hoodie</h3>
+      <p class="price">450 EGP</p>
+      <p>Stock: <span id="stock1">15</span></p>
+
+      <select id="size1">
+        <option value="">Select Size</option>
+        <option>S</option>
+        <option>M</option>
+        <option>L</option>
+        <option>XL</option>
+      </select>
+
+      <input type="text" id="name1" placeholder="Your Name">
+      <button onclick="order(1)">Order (Pickup)</button>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>Pickup from University Only</p>
+  <p>Orders confirmed manually</p>
+</footer>
+
+<script>
+// Fade-in animation
+const cards = document.querySelectorAll('.card');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+});
+cards.forEach(card => observer.observe(card));
+
+function order(id) {
+  const size = document.getElementById('size'+id).value;
+  const name = document.getElementById('name'+id).value;
+  const stock = document.getElementById('stock'+id);
+
+  if(!size || !name){
+    alert("Please enter name and select size.");
+    return;
+  }
+
+  if(parseInt(stock.innerText) <= 0){
+    alert("Out of stock.");
+    return;
+  }
+
+  stock.innerText = parseInt(stock.innerText) - 1;
+
+  alert("Order placed successfully! We will contact you for pickup.");
+}
+</script>
+
+</body>
+</html>
